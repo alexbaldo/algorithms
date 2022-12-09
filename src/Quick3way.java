@@ -2,7 +2,7 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
-public class Quick {
+public class Quick3way {
 
     private static void sort (Comparable[] a)
     {
@@ -13,31 +13,17 @@ public class Quick {
     private static void sort (Comparable[] a, int lo, int hi)
     {
         if (hi <= lo) return;
-        int j = partition(a, lo, hi);       // Partition.
-        sort(a, lo, j-1);                   // Sort left part a[lo..j-1].
-        sort(a, j+1, hi);                   // Sort right part a[j+1..hi].
-    }
-
-    private static int partition(Comparable[] a, int lo, int hi)
-    {
-        // Partition into a[lo..i-1], a[i], a[i+1..hi].
-        int i = lo, j = hi+1;               // Left and right scan indices.
-        Comparable v = a[lo];               // Partitioning item.
-        while (true)
+        int lt = lo, i = lo+1, gt = hi;
+        Comparable v = a[lo];
+        while (i <= gt)
         {
-            // Scan right, scan left, check for scan complete, and exchange.
-            while (less(a[++i], v)) if (i == hi) break;
-            while (less(v, a[--j])) if (j == lo) break;
-            if (i >= j) break;
-            exch(a, i, j);
-        }
-        exch(a, lo, j);                     // Put v = a[j] into position.
-        return j;                           // With a[lo..j-1] <= a[j] <= a[j+1..hi]
-    }
-
-    private static boolean less (Comparable v, Comparable w)
-    {
-        return v.compareTo(w) < 0;
+            int cmp = a[i].compareTo(v);
+            if      (cmp < 0) exch(a, lt++, i++);
+            else if (cmp > 0) exch(a, i, gt--);
+            else              i++;
+        }   // Now a[lo..lt-1] < v = a[lt..gt] < a[gt+1..hi].
+        sort(a, lo, lt - 1);
+        sort(a, gt + 1, hi);
     }
 
     private static void exch (Comparable[] a, int i, int j)
@@ -59,7 +45,7 @@ public class Quick {
     {
         // Test whether the array entries are in order.
         for (int i = 1; i < a.length; i++)
-            if (less(a[i], a[i-1])) return false;
+            if (a[i].compareTo(a[i-1]) == 1) return false;
         return true;
     }
     
