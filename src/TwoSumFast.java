@@ -18,7 +18,8 @@ public class TwoSumFast
         return cnt;
     }
 
-    public static void main (String[] args) {
+    public static void main (String[] args) 
+    {
         In in = new In(args[0]);
         int[] a = in.readAllInts();
         StdOut.println(count(a));
