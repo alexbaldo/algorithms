@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class TwoSumFast
 {
 
-    public static int count(int[] a)
+    public static int count (int[] a)
     {
         // Count pairs that sum to 0.
         Arrays.sort(a);

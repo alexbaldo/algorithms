@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.StdOut;
 public class TwoSum 
 {
 
-    public static int count(int[] a)
+    public static int count (int[] a)
     {
         // Count pairs that sum to 0.
         int N = a.length;
